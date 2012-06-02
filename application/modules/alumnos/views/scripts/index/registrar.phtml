@@ -1,0 +1,102 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('form#registrar_alumnos').validationEngine();	
+        $("#alumnos").addClass("select");
+        $("#registrar_alumnos").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr("actiom"),
+                data: $(this).serialize(),
+                type: "post",
+                dataType: 'json',
+                success: function(data){
+                    if(data.length){
+                        $.each(data, function(key,value){
+                           error= error+ "<br/>"+value;
+                        });
+                            showError(error);
+                        
+                        //alert("Registro exitoso");
+                        //$(".registrar_alumnos")[0].reset();
+                    }
+                    else{
+                         showSuccess("Registro Exitoso");
+                         $("#registrar_alumnos")[0].reset();
+                    }
+                    
+                }
+            });
+        });
+    });
+</script>
+
+<div class="widget">
+    <div class="formEl_b">	
+
+        <form id="registrar_alumnos" class="registrar_alumnos" method="POST" action="/alumnos/index/registrar">
+            <div class="section ">
+                <label>No. de control<small>Numero de control del alumno</small></label>   
+                <div> 
+                    <input required="required" type="text" class="validate[required,custom[number]] large" name="no_contro" id="no_contro">
+                </div>
+            </div>
+            <div class="section ">
+                <label>Nombre<small>Nombre de la persona</small></label>   
+                <div> 
+                    <input type="text" required="required" class="validate[required] large" name="nombre" id="nombre">
+                </div>
+            </div>
+            <div class="section ">
+                <label>Apellido paterno<small></small></label>   
+                <div> 
+                    <input type="text" required="required" class="validate[required] large" name="apaterno" id="apaterno">
+                </div>
+            </div>
+            <div class="section ">
+                <label>Apellido materno<small></small></label>   
+                <div> 
+                    <input type="text" required="required" class="validate[required] large" name="amaterno" id="amaterno">
+                </div>
+            </div>
+            <div class="section ">
+                <label>Fecha de nacimiento<small></small></label>   
+                <div> 
+                    <input type="text" required="required" class="validate[required,custom[date]] medium" name="fecha" id="fecha">
+                </div>
+            </div>
+
+            <div class="section ">
+                <label>Sexo<small>Sexo del alumno</small></label>   
+                <div> 
+                    <div>
+                        <input type="radio" name="sexo" id="radio-1" value="1"  checked="checked" class="ck"/>
+                        <label for="radio-1">Hombre</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="sexo" id="radio-2" value="2"  class="ck"  />
+                        <label for="radio-2" >Mujer</label>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <label> Email<small>Correo electronico</small></label>   
+                <div> 
+                    <input required="required" type="text" class="validate[required,custom[email]]  large" name="email" id="email">
+                </div>
+            </div>
+            <div class="section">
+                <label> Telefono<small>Telefono 10 digitos</small></label>   
+                <div> 
+                    <input type="text" class="validate[required,custom[phone]] large" name="telefono" id="phone">
+                </div>
+            </div>
+            <div class="section last">
+                <div>
+                    <input type="submit" class="uibutton submit_form" value="Registrar"/>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
